@@ -62,9 +62,9 @@ export async function getQuestion(uid: string, qid: string) {
     const row = await db.get(
         'SELECT q.question_id, q.data, a.answer\n' +
         'FROM question q\n' +
-        'LEFT JOIN answer a ON a.question_id = q.question_id\n' +
+        'LEFT JOIN answer a ON a.question_id = q.question_id AND a.uid=?\n' +
         'WHERE q.question_id = ?',
-        qid);
+        uid, qid);
     const countResult = await db.get(
         'SELECT COUNT(*) as `count` FROM answer WHERE answer.uid = ?', uid
     );
